@@ -4,7 +4,8 @@
 页面对IE6的兼容，对前端来说是一件很痛苦而且时间成本很高的事情。需要兼容到IE6的话，只能是渐进的形式，毕竟允许我们使用到布局方面的属性并不多，如果是兼容到IE9，可以是降级的形式进行布局。
 在低版本的浏览器下，主体功能不能出问题，样式偏差不能太大，同时给用户浏览器升级提示。
 
-如下列出常见的IE6等低版本浏览器样式方面的差异及解决方案：
+**如下列出常见的IE6等样式差异及解决方案：**
+
 1.不支持`position:fixed`，需要时刻计算滚动的高度，再加上`position:absolute`；
 2.当在浮动中使用margin时，会产生一个双倍边距的BUG，尽量避免出现margin，float同时出现，可以多嵌套一层盒子，使用padding的形式代替边距；
 3.不支持：after、：before伪类；
@@ -32,3 +33,59 @@ box height = content height + padding top + padding bottom + border top + border
 21.img图片下部高度多余5px，可以将图片转化为块级对象，即`display:block`；
 22.多个浮动元素中间夹杂HTML注释语句，浮动元素宽度设置为100%；则在下一行多显示一个上一行的最后一个字符。需要删除注释；
 23.IE6当中，在同一组CSS属性中，`!important`不起作用。
+
+**如下是一些hack的写法：**
+
+ 1. IE6 css hack：
+```
+1. *html Selector {} /* Selector 表示 css选择器 下同 */ 
+2. Selector { _property: value; } /* property: value 表示 css 的属性名: 属性值 下同 */ 
+3. Selector { _property/**/: /**/value; } 
+4. Selector { -property: value; } /*IE6 css hack常用习惯推荐使用下划线_ */ 
+```
+ 2. IE7 css hack：
+```
+1. *+html Selector {} 
+2. *:first-child+html Selector {} 
+```
+ 3. IE8 css hack：
+```
+Selector { 
+    property: value1; /* W3C MODEL */ 
+    property: value2\0; /* IE 8+ */ 
+    property: value1\9\0; /* IE 9+ */ 
+} 
+```
+ 4. IE6、IE7、IE8共有的css hack：
+```
+Selector { property: value\9; } 
+```
+ 5. IE6、IE7共有的css hack：
+```
+1. Selector { *property: value; } 
+2. Selector { #property: value; } 
+3. Selector { +property: value; } 
+```
+ 6. IE8+ css hack：
+```
+Selector { property: value\0; } 
+```
+ 7. IE9+ css hack：
+```
+Selector { property: value\9\0; } 
+
+```
+ 8. 条件注释：
+```
+<!--[if IE]> Only IE <![endif]-->
+所有的IE可识别
+
+<!--[if gte IE 6]> Only IE 6/+ <![endif]-->
+IE6以及IE6以上都可识别
+
+<!--[if lte IE 7]> Only IE 7/- <![endif]-->
+IE7及ie7以下版本可识别 
+ 
+<!--[if (gte IE 9)|!(IE)]><!--><html> <!--<![endif]--> 
+大于等于ie9或者非ie浏览器 
+```
