@@ -39,11 +39,20 @@ only screen and (device-pixel-ratio: 2){
 //                           "pic@2x.png" 2x );
 // 但是image-set属性是css4的属性，浏览器的支持还有些问题
 ```
-图片的形式插入利用srcset属性，主流浏览器均[支持](http://caniuse.com/#search=srcset)（不支持该属性的也不需要高清图片）：
+图片的形式插入利用srcset属性，主流浏览器均[支持](http://caniuse.com/#search=srcset)（不支持该属性的也不需要高清图片），具体用法如下（摘自[MDN](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/img)）：
+>以逗号分隔的一个或多个字符串列表表明一系列用户代理使用的可能的图像。每一个字符串由以下组成：
+一个图像的 URL。
+可选的，空格后跟以下的其一：
+一个宽度描述符，这是一个正整数，后面紧跟 'w' 符号。该整数宽度除以sizes属性给出的资源（source）大小来计算得到有效的像素密度，即换算成和x描述符等价的值。
+一个像素密度描述符，这是一个正浮点数，后面紧跟 'x' 符号。
+如果没有指定源描述符，那它会被指定为默认的 1x。
+在相同的 srcset 属性中混合使用宽度描述符和像素密度描述符时，会导致该值无效。重复的描述符（比如，两个源 在相同的srcset两个源都是 '2x'）也是无效的。
+浏览器选择在给出的时间点显示大部分 adequate 图片。
+
+用法示例：
 ```
-<img src="image-128.png"
-	srcset="image-128.png 128w, image-256.png 256w, image-512.png 512w"
-	sizes="(max-width: 360px) 340px, 128px" />
+<img src="image.png"
+	srcset="image.png 1x, image@2x.png 2x" />
 ```
 
 
