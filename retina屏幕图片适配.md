@@ -38,11 +38,11 @@ only screen and (device-pixel-ratio: 2){
 //                           "pic@2x.png" 2x );
 // 但是image-set属性是css4的属性，浏览器的支持还有些问题
 ```
-图片的形式插入利用srcset属性，主流浏览器均支持：
+图片的形式插入利用srcset属性，主流浏览器均支持（不支持该属性的也不需要高清图片）：
 ```
-	<img src="image-128.png"
-		srcset="image-128.png 128w, image-256.png 256w, image-512.png 512w"
-		sizes="(max-width: 360px) 340px, 128px" />
+<img src="image-128.png"
+	srcset="image-128.png 128w, image-256.png 256w, image-512.png 512w"
+	sizes="(max-width: 360px) 340px, 128px" />
 
 ```
 		
